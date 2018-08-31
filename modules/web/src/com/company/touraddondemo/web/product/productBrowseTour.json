@@ -1,0 +1,122 @@
+[
+  {
+    "id": "step1",
+    "text": "tour.tutorialStartedText",
+    "title": "tour.tutorialStartedTitle",
+    "width": "400",
+    "textContentMode": "html",
+    "titleContentMode": "html",
+    "cancellable": "true",
+    "buttons": [
+      {
+        "caption": "Cancel",
+        "style": "danger",
+        "action": "tour:cancel",
+        "enabled": "true"
+      },
+      {
+        "caption": "Next",
+        "style": "friendly",
+        "action": "tour:next",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "id": "step2",
+    "text": "tour.createButtonText",
+    "title": "tour.createButtonTitle",
+    "width": "400",
+    "textContentMode": "html",
+    "titleContentMode": "html",
+    "attachTo": "createBtn",
+    "anchor": "right",
+    "buttons": [
+      {
+        "caption": "Back",
+        "style": "primary",
+        "action": "tour:back",
+        "enabled": "true"
+      },
+      {
+        "caption": "Next",
+        "style": "friendly",
+        "action": "tour:next",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "id": "step3",
+    "text": "tour.editButtonText",
+    "title": "tour.editButtonTitle",
+    "width": "400",
+    "textContentMode": "html",
+    "titleContentMode": "html",
+    "attachTo": "editBtn",
+    "anchor": "right",
+    "buttons": [
+      {
+        "caption": "Back",
+        "style": "primary",
+        "action": "tour:back",
+        "enabled": "true"
+      },
+      {
+        "caption": "Next",
+        "style": "friendly",
+        "action": "tour:next",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "id": "step4",
+    "text": "tour.removeButtonText",
+    "title": "tour.removeButtonTitle",
+    "width": "400",
+    "textContentMode": "html",
+    "titleContentMode": "html",
+    "attachTo": "removeBtn",
+    "anchor": "bottom",
+    "buttons": [
+      {
+        "caption": "Back",
+        "style": "primary",
+        "action": "tour:back",
+        "enabled": "true"
+      },
+      {
+        "caption": "Next",
+        "style": "friendly",
+        "action": "tour:next",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "id": "step5",
+    "text": "tour.filterPanelText",
+    "title": "tour.filterPanelTitle",
+    "width": "400",
+    "textContentMode": "html",
+    "titleContentMode": "html",
+    "attachTo": "filter",
+    "anchor": "bottom",
+    "modal": "true",
+    "buttons": [
+      {
+        "caption": "Back",
+        "style": "primary",
+        "action": "tour:back",
+        "enabled": "true"
+      },
+      {
+        "caption": "Finish",
+        "style": "friendly",
+        "action": "tour:next",
+        "enabled": "true"
+      }
+    ]
+  }
+]
