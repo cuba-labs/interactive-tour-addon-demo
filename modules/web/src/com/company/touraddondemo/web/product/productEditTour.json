@@ -9,13 +9,13 @@
     "cancellable": "true",
     "buttons": [
       {
-        "caption": "Cancel",
+        "caption": "tour.cancel",
         "style": "danger",
         "action": "tour:cancel",
         "enabled": "true"
       },
       {
-        "caption": "Next",
+        "caption": "tour.next",
         "style": "friendly",
         "action": "tour:next",
         "enabled": "true"
@@ -33,13 +33,13 @@
     "anchor": "right",
     "buttons": [
       {
-        "caption": "Back",
+        "caption": "tour.back",
         "style": "primary",
         "action": "tour:back",
         "enabled": "true"
       },
       {
-        "caption": "Next",
+        "caption": "tour.next",
         "style": "friendly",
         "action": "tour:next",
         "enabled": "true"
@@ -57,13 +57,13 @@
     "anchor": "right",
     "buttons": [
       {
-        "caption": "Back",
+        "caption": "tour.back",
         "style": "primary",
         "action": "tour:back",
         "enabled": "true"
       },
       {
-        "caption": "Finish",
+        "caption": "tour.finish",
         "style": "friendly",
         "action": "tour:next",
         "enabled": "true"

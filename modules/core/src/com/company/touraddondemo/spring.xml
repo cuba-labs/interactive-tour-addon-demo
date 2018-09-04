@@ -8,4 +8,13 @@
     <!-- Annotation-based beans -->
     <context:component-scan base-package="com.company.touraddondemo"/>
 
+    <bean id="touraddondemo_MBeanExporter" lazy-init="false"
+          class="com.haulmont.cuba.core.sys.jmx.MBeanExporter">
+        <property name="beans">
+            <map>
+                <entry key="${cuba.webContextName}.touraddondemo:type=UiTestSupport"
+                       value-ref="touraddondemo_UiTestSupportMBean"/>
+            </map>
+        </property>
+    </bean>
 </beans>

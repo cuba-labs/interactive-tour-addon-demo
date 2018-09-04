@@ -44,6 +44,9 @@
                         action="productsTable.edit"/>
                 <button id="removeBtn"
                         action="productsTable.remove"/>
+                <button id="tourButton"
+                        caption="Tutorial"
+                        invoke="startTour"/>
             </buttonsPanel>
         </groupTable>
     </layout>

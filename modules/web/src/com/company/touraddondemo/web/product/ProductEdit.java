@@ -1,20 +1,13 @@
 package com.company.touraddondemo.web.product;
 
-import com.haulmont.addon.tour.web.gui.components.Tour;
-import com.haulmont.addon.tour.web.gui.components.TourStartAction;
-import com.haulmont.addon.tour.web.gui.utils.TourParser;
-import com.haulmont.cuba.core.global.AppBeans;
-import com.haulmont.cuba.core.global.Resources;
-import com.haulmont.cuba.gui.components.AbstractEditor;
 import com.company.touraddondemo.entity.Product;
+import com.haulmont.addon.tour.web.gui.components.*;
+import com.haulmont.cuba.gui.ComponentsHelper;
+import com.haulmont.cuba.gui.components.AbstractEditor;
 
-import javax.inject.Inject;
 import java.util.Objects;
 
 public class ProductEdit extends AbstractEditor<Product> {
-
-    @Inject
-    protected Resources resources;
 
     protected Tour tour;
 
@@ -29,9 +22,74 @@ public class ProductEdit extends AbstractEditor<Product> {
     }
 
     protected void createTour() {
-        String file = Objects.requireNonNull(resources
-                .getResourceAsString("com/company/touraddondemo/web/product/productEditTour.json"));
-        TourParser tourParser = AppBeans.get(TourParser.class);
-        tour = tourParser.parseTour(file, getMessagesPack(), this);
+        tour = new Tour(this);
+
+        Step step = new Step("step1");
+        step.setText(getMessage("tour.editStartedText"));
+        step.setTitle(getMessage("tour.editStartedTitle"));
+        step.setWidth("400");
+        step.setTextContentMode(ContentMode.HTML);
+        step.setTitleContentMode(ContentMode.HTML);
+        step.setCancellable(true);
+
+        StepButton stepButton = new StepButton(getMessage("tour.cancel"));
+        stepButton.setStyleName("danger");
+        stepButton.setEnabled(true);
+        stepButton.addStepButtonClickListener(TourActionType.CANCEL::execute);
+        step.addButton(stepButton);
+
+        stepButton = new StepButton(getMessage("tour.next"));
+        stepButton.setStyleName("friendly");
+        stepButton.setEnabled(true);
+        stepButton.addStepButtonClickListener(TourActionType.NEXT::execute);
+        step.addButton(stepButton);
+
+        tour.addStep(step);
+
+        step = new Step("step2");
+        step.setText(getMessage("tour.fieldGroupText"));
+        step.setTitle(getMessage("tour.fieldGroupTitle"));
+        step.setWidth("400");
+        step.setTextContentMode(ContentMode.HTML);
+        step.setTitleContentMode(ContentMode.HTML);
+        step.setAttachedTo(Objects.requireNonNull(ComponentsHelper.findComponent(getFrame(), "fieldGroup")));
+        step.setAnchor(StepAnchor.RIGHT);
+
+        stepButton = new StepButton(getMessage("tour.back"));
+        stepButton.setStyleName("primary");
+        stepButton.setEnabled(true);
+        stepButton.addStepButtonClickListener(TourActionType.BACK::execute);
+        step.addButton(stepButton);
+
+        stepButton = new StepButton(getMessage("tour.next"));
+        stepButton.setStyleName("friendly");
+        stepButton.setEnabled(true);
+        stepButton.addStepButtonClickListener(TourActionType.NEXT::execute);
+        step.addButton(stepButton);
+
+        tour.addStep(step);
+
+        step = new Step("step3");
+        step.setText(getMessage("tour.windowActionsText"));
+        step.setTitle(getMessage("tour.windowActionsTitle"));
+        step.setWidth("400");
+        step.setTextContentMode(ContentMode.HTML);
+        step.setTitleContentMode(ContentMode.HTML);
+        step.setAttachedTo(Objects.requireNonNull(ComponentsHelper.findComponent(getFrame(), "windowClose")));
+        step.setAnchor(StepAnchor.RIGHT);
+
+        stepButton = new StepButton(getMessage("tour.back"));
+        stepButton.setStyleName("primary");
+        stepButton.setEnabled(true);
+        stepButton.addStepButtonClickListener(TourActionType.BACK::execute);
+        step.addButton(stepButton);
+
+        stepButton = new StepButton(getMessage("tour.finish"));
+        stepButton.setStyleName("friendly");
+        stepButton.setEnabled(true);
+        stepButton.addStepButtonClickListener(TourActionType.NEXT::execute);
+        step.addButton(stepButton);
+
+        tour.addStep(step);
     }
 }
