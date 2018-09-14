@@ -15,15 +15,20 @@ public class ProductEdit extends AbstractEditor<Product> {
     protected void postInit() {
         super.postInit();
 
-        createTour();
+        createTour(); // Create a tour
 
+        // Create an action to start the tour
         TourStartAction tourStartAction = TourStartAction.create(tour);
+        // Perform the start action by this window
         tourStartAction.actionPerform(this);
     }
 
+    // Creates the tour by JAVA classes
     protected void createTour() {
+        // Create a tour extending this window
         tour = new Tour(this);
 
+        // Create a step with your own id, might be null
         Step step = new Step("step1");
         step.setText(getMessage("tour.editStartedText"));
         step.setTitle(getMessage("tour.editStartedTitle"));
@@ -32,9 +37,13 @@ public class ProductEdit extends AbstractEditor<Product> {
         step.setTitleContentMode(ContentMode.HTML);
         step.setCancellable(true);
 
+        // Create a step button with your own caption
         StepButton stepButton = new StepButton(getMessage("tour.cancel"));
+        // You could set your own style to the step button
         stepButton.setStyleName("danger");
         stepButton.setEnabled(true);
+        // You could use predefined actions from TourActionType and StepActionType or create
+        // your own StepButtonClickListener
         stepButton.addStepButtonClickListener(TourActionType.CANCEL::execute);
         step.addButton(stepButton);
 
