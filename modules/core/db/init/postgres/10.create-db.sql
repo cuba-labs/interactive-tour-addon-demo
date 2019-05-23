@@ -1,6 +1,6 @@
 -- begin TOURADDONDEMO_PRODUCT
 create table TOURADDONDEMO_PRODUCT (
-    ID uuid,
+    ID varchar(36) not null,
     VERSION integer not null,
     CREATE_TS timestamp,
     CREATED_BY varchar(50),
