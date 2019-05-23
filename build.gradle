@@ -46,7 +46,7 @@ dependencies {
 
 }
 
-def postgres = 'org.postgresql:postgresql:9.4.1212'
+def hsql = 'org.hsqldb:hsqldb:2.4.1'
 
 configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'java')
@@ -91,8 +91,8 @@ configure(coreModule) {
     dependencies {
         compile(globalModule)
         compileOnly(servletApi)
-        jdbc(postgres)
-        testRuntime(postgres)
+        jdbc(hsql)
+        testRuntime(hsql)
 
     }
 
@@ -113,19 +113,19 @@ configure(coreModule) {
     }
 
     task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
-        dbms = 'postgres'
+        dbms = 'hsql'
         host = 'localhost'
         dbName = 'touraddondemo'
-        dbUser = 'cuba'
-        dbPassword = 'cuba'
+        dbUser = 'sa'
+        dbPassword = ''
     }
 
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
-        dbms = 'postgres'
+        dbms = 'hsql'
         host = 'localhost'
         dbName = 'touraddondemo'
-        dbUser = 'cuba'
-        dbPassword = 'cuba'
+        dbUser = 'sa'
+        dbPassword = ''
     }
 }
 
@@ -139,7 +139,6 @@ configure(webModule) {
     dependencies {
         compileOnly(servletApi)
         compile(globalModule)
-        testRuntime(postgres)
 
         testCompile('junit:junit:4.12')
 
