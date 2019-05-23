@@ -41,6 +41,7 @@
                 <button id="createBtn" action="productsTable.create"/>
                 <button id="editBtn" action="productsTable.edit"/>
                 <button id="removeBtn" action="productsTable.remove"/>
+                <button id="startTourBtn" caption="msg://browse.startTour" invoke="startTour"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

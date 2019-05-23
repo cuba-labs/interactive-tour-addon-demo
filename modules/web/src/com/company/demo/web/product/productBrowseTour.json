@@ -1,0 +1,122 @@
+[
+  {
+    "id": "stepOne",
+    "text": "tour.tutorialStartedText",
+    "title": "tour.tutorialStartedTitle",
+    "width": "400",
+    "textContentMode": "html",
+    "titleContentMode": "html",
+    "cancellable": "true",
+    "buttons": [
+      {
+        "caption": "tour.cancel",
+        "style": "danger",
+        "action": "tour:cancel",
+        "enabled": "true"
+      },
+      {
+        "caption": "tour.next",
+        "style": "friendly",
+        "action": "tour:next",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "id": "stepTwo",
+    "text": "tour.createButtonText",
+    "title": "tour.createButtonTitle",
+    "width": "400",
+    "textContentMode": "html",
+    "titleContentMode": "html",
+    "attachTo": "createBtn",
+    "anchor": "right",
+    "buttons": [
+      {
+        "caption": "tour.back",
+        "style": "primary",
+        "action": "tour:back",
+        "enabled": "true"
+      },
+      {
+        "caption": "tour.next",
+        "style": "friendly",
+        "action": "tour:next",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "id": "stepThree",
+    "text": "tour.editButtonText",
+    "title": "tour.editButtonTitle",
+    "width": "400",
+    "textContentMode": "html",
+    "titleContentMode": "html",
+    "attachTo": "editBtn",
+    "anchor": "right",
+    "buttons": [
+      {
+        "caption": "tour.back",
+        "style": "primary",
+        "action": "tour:back",
+        "enabled": "true"
+      },
+      {
+        "caption": "tour.next",
+        "style": "friendly",
+        "action": "tour:next",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "id": "stepFour",
+    "text": "tour.removeButtonText",
+    "title": "tour.removeButtonTitle",
+    "width": "400",
+    "textContentMode": "html",
+    "titleContentMode": "html",
+    "attachTo": "removeBtn",
+    "anchor": "bottom",
+    "buttons": [
+      {
+        "caption": "tour.back",
+        "style": "primary",
+        "action": "tour:back",
+        "enabled": "true"
+      },
+      {
+        "caption": "tour.next",
+        "style": "friendly",
+        "action": "tour:next",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "id": "stepFive",
+    "text": "tour.filterPanelText",
+    "title": "tour.filterPanelTitle",
+    "width": "400",
+    "textContentMode": "html",
+    "titleContentMode": "html",
+    "attachTo": "filter",
+    "anchor": "bottom",
+    "modal": "true",
+    "buttons": [
+      {
+        "caption": "tour.back",
+        "style": "primary",
+        "action": "tour:back",
+        "enabled": "true"
+      },
+      {
+        "caption": "tour.finish",
+        "style": "friendly",
+        "action": "tour:next",
+        "enabled": "true"
+      }
+    ]
+  }
+]
