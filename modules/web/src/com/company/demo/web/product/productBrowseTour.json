@@ -1,6 +1,6 @@
 [
   {
-    "id": "stepOne",
+    "id": "browseStepOne",
     "text": "tour.tutorialStartedText",
     "title": "tour.tutorialStartedTitle",
     "width": "400",
@@ -23,7 +23,7 @@
     ]
   },
   {
-    "id": "stepTwo",
+    "id": "browseStepTwo",
     "text": "tour.createButtonText",
     "title": "tour.createButtonTitle",
     "width": "400",
@@ -47,7 +47,7 @@
     ]
   },
   {
-    "id": "stepThree",
+    "id": "browseStepThree",
     "text": "tour.editButtonText",
     "title": "tour.editButtonTitle",
     "width": "400",
@@ -71,7 +71,7 @@
     ]
   },
   {
-    "id": "stepFour",
+    "id": "browseStepFour",
     "text": "tour.removeButtonText",
     "title": "tour.removeButtonTitle",
     "width": "400",
@@ -95,7 +95,7 @@
     ]
   },
   {
-    "id": "stepFive",
+    "id": "browseStepFive",
     "text": "tour.filterPanelText",
     "title": "tour.filterPanelTitle",
     "width": "400",

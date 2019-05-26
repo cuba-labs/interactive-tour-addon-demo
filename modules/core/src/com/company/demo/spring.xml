@@ -5,4 +5,13 @@
     <!-- Annotation-based beans -->
     <context:component-scan base-package="com.company.demo"/>
 
+    <bean id="demo_MBeanExporter" lazy-init="false"
+          class="com.haulmont.cuba.core.sys.jmx.MBeanExporter">
+        <property name="beans">
+            <map>
+                <entry key="${cuba.webContextName}.demo:type=UiTestSupport"
+                       value-ref="demo_UiTestSupport"/>
+            </map>
+        </property>
+    </bean>
 </beans>

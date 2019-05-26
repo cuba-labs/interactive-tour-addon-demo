@@ -36,7 +36,7 @@ public class ProductEdit extends StandardEditor<Product> {
     }
 
     protected Step createStepOne() {
-        Step step = new Step("stepOne");
+        Step step = new Step("editStepOne");
 
         step.setText(messages.getMessage(getClass(),"tour.editStartedText"));
         step.setTitle(messages.getMessage(getClass(), "tour.editStartedTitle"));
@@ -63,7 +63,7 @@ public class ProductEdit extends StandardEditor<Product> {
     }
 
     protected Step createStepTwo() {
-        Step step = new Step("stepTwo");
+        Step step = new Step("editStepTwo");
 
         step.setText(messages.getMessage(getClass(),"tour.formText"));
         step.setTitle(messages.getMessage(getClass(),"tour.formTitle"));
@@ -91,7 +91,7 @@ public class ProductEdit extends StandardEditor<Product> {
     }
 
     protected Step createStepThree() {
-        Step step = new Step("stepThree");
+        Step step = new Step("editStepThree");
 
         step.setText(messages.getMessage(getClass(),"tour.windowActionsText"));
         step.setTitle(messages.getMessage(getClass(),"tour.windowActionsTitle"));

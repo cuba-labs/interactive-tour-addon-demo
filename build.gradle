@@ -134,6 +134,11 @@ configure(webModule) {
     dependencies {
         compileOnly(servletApi)
         compile(globalModule)
+
+        testCompile("junit:junit:4.12")
+        testCompile("com.haulmont.masquerade:masquerade-connector:2.0.0")
+        testCompile("com.haulmont.masquerade:masquerade-web:2.0.0")
+        testCompile('org.slf4j:jul-to-slf4j:1.7.25')
     }
 
     task webArchive(type: Zip) {
@@ -172,6 +177,12 @@ configure(webModule) {
         appName = "${modulePrefix}"
         appJars(modulePrefix + '-global', modulePrefix + '-web')
     }
+
+    task testUi(type: Test, dependsOn: testClasses) {
+        include('**/*UiTest.class')
+        systemProperty 'selenide.browser', System.getProperty('selenide.browser')
+        systemProperty 'webdriver.chrome.driver', System.getProperty('webdriver.chrome.driver')
+    }
 }
 
 task undeploy(type: Delete, dependsOn: ":${modulePrefix}-web:cleanConf") {
@@ -191,3 +202,45 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
     }
 }
 
+task prepareTest(dependsOn: [dropTomcat, subprojects.assemble], description: 'Prepare server for tests') {
+    doLast {
+        setupTomcat.execute()
+
+        // Enable remote JMX
+        project.file('deploy/tomcat/bin/setenv.bat').text = '''
+set CATALINA_OPTS=-Xmx512m -Dfile.encoding=UTF-8
+
+set CATALINA_OPTS=%CATALINA_OPTS% -Dlogback.configurationFile=../conf/logback.xml
+
+set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote 
+set CATALINA_OPTS=%CATALINA_OPTS% -Djava.rmi.server.hostname=localhost 
+set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote.port=7777 
+set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote.ssl=false 
+set CATALINA_OPTS=%CATALINA_OPTS% -Dcom.sun.management.jmxremote.authenticate=false
+
+set JPDA_OPTS=-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n
+'''
+
+        project.file('deploy/tomcat/bin/setenv.sh').text = '''
+CATALINA_OPTS="-Xmx512m -Dfile.encoding=UTF-8"
+
+CATALINA_OPTS="$CATALINA_OPTS -Dlogback.configurationFile=../conf/logback.xml"
+
+CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote"
+
+CATALINA_OPTS="$CATALINA_OPTS \\
+-Djava.rmi.server.hostname=localhost \\
+-Dcom.sun.management.jmxremote.port=7777 \\
+-Dcom.sun.management.jmxremote.ssl=false \\
+-Dcom.sun.management.jmxremote.authenticate=false"
+
+JPDA_OPTS="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"
+'''
+        coreModule.deploy.execute()
+        webModule.deploy.execute()
+
+        webModule.clean.execute()
+
+        coreModule.createDb.execute()
+    }
+}
