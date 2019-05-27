@@ -9,9 +9,9 @@ In order to perform UI tests, you should have the last version of [Chrome WebDri
 
 To run the tests, do the following:
 
-- To prepare the environment for the tests you need to call the Gradle task:
+- To prepare the environment for the UI tests you need to call following Gradle tasks:
 
-        gradlew prepareTest
+        gradlew prepareTest startDb createDb
 
 - Then you need to start the application:
         

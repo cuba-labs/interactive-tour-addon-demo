@@ -109,6 +109,17 @@ configure(coreModule) {
         appJars(modulePrefix + '-global', modulePrefix + '-core')
     }
 
+    task startDb(description: 'Starts local HSQLDB server', type: CubaHsqlStart) {
+        dbPort = 9010
+        dbName = 'demo'
+        showUi = !rootProject.hasProperty('headlessHsqlServer')
+    }
+
+    task stopDb(description: 'Stops local HSQLDB server', type: CubaHsqlStop)  {
+        dbPort = 9010
+        dbName = 'demo'
+    }
+    
     task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
         dbms = 'hsql'
         host = 'localhost:9010'
@@ -202,7 +213,7 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
     }
 }
 
-task prepareTest(dependsOn: [dropTomcat, subprojects.assemble], description: 'Prepare server for tests') {
+task prepareTest(dependsOn: [dropTomcat, subprojects.assemble], description: 'Prepares environment to perform UI tests') {
     doLast {
         setupTomcat.execute()
 
@@ -240,7 +251,5 @@ JPDA_OPTS="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"
         webModule.deploy.execute()
 
         webModule.clean.execute()
-
-        coreModule.createDb.execute()
     }
 }
