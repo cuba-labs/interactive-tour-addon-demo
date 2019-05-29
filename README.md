@@ -1,25 +1,32 @@
-# tour-addon-demo
+# Tour addon demo
 
 This is a small demo for the interactive tour addon.
 
 # UI Tests
 
-The project contains some UI tests. 
+The project contains some UI tests performing on the Chrome web browser.
+In order to perform UI tests, you should have the latest version of [Chrome WebDriver](http://chromedriver.chromium.org/downloads) depending on your Chrome web browser.
 
-In order to run the tests, do the following:
+To run the tests, do the following:
 
-- to prepare the environment for the tests you need to call in the terminal the Gradle task:
+- To prepare the environment for the UI tests you need to call following Gradle tasks:
 
-        gradlew prepareTest
+        gradlew prepareTest startDb createDb
 
-- to run the simple test or the test class you need to edit standard
-  test configuration for the test project in IntelliJ. To do so, click the
-  *Select Run/Debug Configuration* button and select *Edit Configurations*  in the
-  drop-down list. In the VM options field, add the following:
+- Then you need to start the application:
+        
+        gradlew start
 
-      -Dselenide.browser=chrome -Dwebdriver.chrome.driver=<your_path>/chromedriver.exe
+- Finally run the command below to perform UI tests:
 
-  where `<your_path>` is the path to the chrome driver on your computer.
-
-  After that, select the simple test or the test class you want to run, right
-  click on it and select *Debug* option.
+        gradlew testUi -Dselenide.browser=chrome -Dwebdriver.chrome.driver=<path_to_webdriver>
+        
+  where `<path_to_your_webdriver>` is the path to Chrome WebDriver on your computer. For instance:
+  
+  - UNIX:
+        
+        /home/<user_name>/chromedriver
+        
+  - WINDOWS:
+  
+        C:\users\<user_name>\chromedriver.exe

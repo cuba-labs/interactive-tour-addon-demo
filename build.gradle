@@ -1,8 +1,7 @@
 
 buildscript {
-    ext.cubaVersion = '6.10.8'
-    repositories {
-        
+    ext.cubaVersion = '7.0.5'
+    repositories { 
         mavenLocal()
         maven {
             url 'https://repo.cuba-platform.com/content/groups/work'
@@ -23,17 +22,14 @@ def modulePrefix = 'app'
 def globalModule = project(":${modulePrefix}-global")
 def coreModule = project(":${modulePrefix}-core")
 def webModule = project(":${modulePrefix}-web")
-def webThemesModule = project(":${modulePrefix}-web-themes")
 
 def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
-
-apply(plugin: 'idea')
 apply(plugin: 'cuba')
 
 cuba {
     artifact {
-        group = 'com.company.touraddondemo'
+        group = 'com.company.demo'
         version = '0.1'
         isSnapshot = true
     }
@@ -44,20 +40,18 @@ cuba {
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-    appComponent("com.haulmont.addon.tour:tour-global:1.0.2")
-
+    appComponent("com.haulmont.addon.tour:tour-global:0.1-SNAPSHOT")
 }
 
-def postgres = 'org.postgresql:postgresql:9.4.1212'
+def hsql = 'org.hsqldb:hsqldb:2.4.1'
 
 configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'java')
     apply(plugin: 'maven')
-    apply(plugin: 'idea')
     apply(plugin: 'cuba')
 
     dependencies {
-        compile group: 'com.google.guava', name: 'guava', version: '25.0-jre'
+        testCompile('junit:junit:4.12')
     }
 
     task sourceJar(type: Jar) {
@@ -71,11 +65,18 @@ configure([globalModule, coreModule, webModule]) {
 }
 
 configure(globalModule) {
-    entitiesEnhancing {
-        main { enabled = true }
+    dependencies {
+        if (!JavaVersion.current().isJava8()) {
+            runtime('javax.xml.bind:jaxb-api:2.3.1')
+            runtime('org.glassfish.jaxb:jaxb-runtime:2.3.1')
+        }
     }
 
-    
+    entitiesEnhancing {
+        main {
+            enabled = true
+        }
+    }
 }
 
 configure(coreModule) {
@@ -87,10 +88,9 @@ configure(coreModule) {
 
     dependencies {
         compile(globalModule)
-        provided(servletApi)
-        jdbc(postgres)
-        testRuntime(postgres)
-
+        compileOnly(servletApi)
+        jdbc(hsql)
+        testRuntime(hsql)
     }
 
     task cleanConf(description: 'Cleans up conf directory') {
@@ -109,48 +109,49 @@ configure(coreModule) {
         appJars(modulePrefix + '-global', modulePrefix + '-core')
     }
 
+    task startDb(description: 'Starts local HSQLDB server', type: CubaHsqlStart) {
+        dbPort = 9010
+        dbName = 'demo'
+        showUi = !rootProject.hasProperty('headlessHsqlServer')
+    }
+
+    task stopDb(description: 'Stops local HSQLDB server', type: CubaHsqlStop)  {
+        dbPort = 9010
+        dbName = 'demo'
+    }
+    
     task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
-        dbms = 'postgres'
-        host = 'localhost'
-        dbName = 'touraddondemo'
-        dbUser = 'cuba'
-        dbPassword = 'cuba'
+        dbms = 'hsql'
+        host = 'localhost:9010'
+        dbName = 'demo'
+        dbUser = 'sa'
+        dbPassword = ''
     }
 
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
-        dbms = 'postgres'
-        host = 'localhost'
-        dbName = 'touraddondemo'
-        dbUser = 'cuba'
-        dbPassword = 'cuba'
+        dbms = 'hsql'
+        host = 'localhost:9010'
+        dbName = 'demo'
+        dbUser = 'sa'
+        dbPassword = ''
     }
 }
 
 configure(webModule) {
-    apply plugin: 'groovy'
-
     configurations {
         webcontent
     }
 
     dependencies {
-        provided(servletApi)
+        compileOnly(servletApi)
         compile(globalModule)
-        testRuntime(postgres)
 
-        testCompile('junit:junit:4.12')
-
-        //the library provides an ability to access web-services, JMX and etc.
-        testCompile('com.haulmont.masquerade:masquerade-connector:1.0.6')
-
-        //the library for the UI testing
-        testCompile('com.haulmont.masquerade:masquerade-web:1.0.6')
-
-        // enable logging
+        testCompile("junit:junit:4.12")
+        testCompile("com.haulmont.masquerade:masquerade-connector:2.0.0")
+        testCompile("com.haulmont.masquerade:masquerade-web:2.0.0")
         testCompile('org.slf4j:jul-to-slf4j:1.7.25')
-
     }
-    
+
     task webArchive(type: Zip) {
         from file("$buildDir/web")
         from file('web')
@@ -163,7 +164,7 @@ configure(webModule) {
 
     task deployConf(type: Copy) {
         from file('src')
-        include "com/company/touraddondemo/**"
+        include "com/company/demo/**"
         into "$cuba.tomcat.dir/conf/${modulePrefix}"
     }
 
@@ -193,36 +194,7 @@ configure(webModule) {
         systemProperty 'selenide.browser', System.getProperty('selenide.browser')
         systemProperty 'webdriver.chrome.driver', System.getProperty('webdriver.chrome.driver')
     }
-
-    task buildScssThemes(type: CubaWebScssThemeCreation)
-    task deployThemes(type: CubaDeployThemeTask, dependsOn: buildScssThemes)
-    assemble.dependsOn buildScssThemes
 }
-
-configure(webThemesModule) {
-    apply(plugin: 'java')
-    apply(plugin: 'maven')
-    apply(plugin: 'cuba')
-
-    appModuleType = 'web-themes'
-
-    buildDir = file('../build/scss-themes')
-
-    sourceSets {
-        main {
-            java {
-                srcDir '.'
-            }
-            resources {
-                srcDir '.'
-            }
-        }
-    }
-}
-
-
-
-
 
 task undeploy(type: Delete, dependsOn: ":${modulePrefix}-web:cleanConf") {
     delete("$cuba.tomcat.dir/shared")
@@ -241,13 +213,8 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.3.1'
-}
-
-task prepareTest(dependsOn: [dropTomcat, subprojects.assemble], description: 'Prepare server for tests') {
+task prepareTest(dependsOn: [dropTomcat, subprojects.assemble], description: 'Prepares environment to perform UI tests') {
     doLast {
-        // Setup
         setupTomcat.execute()
 
         // Enable remote JMX
@@ -280,21 +247,9 @@ CATALINA_OPTS="$CATALINA_OPTS \\
 
 JPDA_OPTS="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"
 '''
-
-        // Deploy
         coreModule.deploy.execute()
         webModule.deploy.execute()
-        // Create DB
-        coreModule.createDb.execute()
-        // Start server
-        start.execute()
-        ant.waitfor(maxwait: 15, maxwaitunit: 'second', checkevery: 2, checkeveryunit: 'second') {
-            http(url: "http://localhost:8080/app")
-        }
-        // Delete out directory
-        File dir = new File("$projectDir/tests/ui/out")
-        if (dir.exists()) {
-            project.delete(dir)
-        }
+
+        webModule.clean.execute()
     }
 }

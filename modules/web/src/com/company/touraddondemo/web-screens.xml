@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
-    <screen id="touraddondemo$Product.browse"
-            template="com/company/touraddondemo/web/product/product-browse.xml"/>
-    <screen id="touraddondemo$Product.edit"
-            template="com/company/touraddondemo/web/product/product-edit.xml"/>
-</screen-config>

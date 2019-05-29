@@ -1,5 +1,5 @@
--- begin TOURADDONDEMO_PRODUCT
-create table TOURADDONDEMO_PRODUCT (
+-- begin DEMO_PRODUCT
+create table DEMO_PRODUCT (
     ID varchar(36) not null,
     VERSION integer not null,
     CREATE_TS timestamp,
@@ -14,4 +14,4 @@ create table TOURADDONDEMO_PRODUCT (
     --
     primary key (ID)
 )^
--- end TOURADDONDEMO_PRODUCT
+-- end DEMO_PRODUCT
