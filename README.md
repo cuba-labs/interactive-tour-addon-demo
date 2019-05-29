@@ -4,8 +4,8 @@ This is a small demo for the interactive tour addon.
 
 # UI Tests
 
-The project contains some UI tests performing on a Chrome web browser.
-In order to perform UI tests, you should have the last version of [Chrome WebDriver](http://chromedriver.chromium.org/downloads) depending on your Chrome web browser.
+The project contains some UI tests performing on the Chrome web browser.
+In order to perform UI tests, you should have the latest version of [Chrome WebDriver](http://chromedriver.chromium.org/downloads) depending on your Chrome web browser.
 
 To run the tests, do the following:
 
@@ -19,7 +19,7 @@ To run the tests, do the following:
 
 - Finally run the command below to perform UI tests:
 
-        gradlew -Dselenide.browser=chrome -Dwebdriver.chrome.driver=<path_to_webdriver>
+        gradlew testUi -Dselenide.browser=chrome -Dwebdriver.chrome.driver=<path_to_webdriver>
         
   where `<path_to_your_webdriver>` is the path to Chrome WebDriver on your computer. For instance:
   

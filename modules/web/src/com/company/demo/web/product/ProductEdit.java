@@ -1,13 +1,12 @@
 package com.company.demo.web.product;
 
-import com.haulmont.addon.tour.web.gui.components.*;
-import com.haulmont.cuba.core.global.Messages;
-import com.haulmont.cuba.gui.ComponentsHelper;
-import com.haulmont.cuba.gui.screen.*;
 import com.company.demo.entity.Product;
+import com.haulmont.addon.tour.web.gui.components.*;
+import com.haulmont.cuba.gui.components.Button;
+import com.haulmont.cuba.gui.components.Form;
+import com.haulmont.cuba.gui.screen.*;
 
 import javax.inject.Inject;
-import java.util.Objects;
 
 @UiController("demo_Product.edit")
 @UiDescriptor("product-edit.xml")
@@ -16,7 +15,11 @@ import java.util.Objects;
 public class ProductEdit extends StandardEditor<Product> {
 
     @Inject
-    private Messages messages;
+    private Form form;
+    @Inject
+    private Button windowClose;
+    @Inject
+    private MessageBundle messageBundle;
 
     protected Tour tour;
     protected TourStartAction tourStartAction;
@@ -38,21 +41,21 @@ public class ProductEdit extends StandardEditor<Product> {
     protected Step createStepOne() {
         Step step = new Step("editStepOne");
 
-        step.setText(messages.getMessage(getClass(),"tour.editStartedText"));
-        step.setTitle(messages.getMessage(getClass(), "tour.editStartedTitle"));
+        step.setText(messageBundle.getMessage("tour.editStartedText"));
+        step.setTitle(messageBundle.getMessage("tour.editStartedTitle"));
         step.setWidth("400");
         step.setTextContentMode(ContentMode.HTML);
         step.setTitleContentMode(ContentMode.HTML);
         step.setCancellable(true);
 
-        StepButton stepButton = new StepButton(messages.getMessage(getClass(), "tour.cancel"));
+        StepButton stepButton = new StepButton(messageBundle.getMessage("tour.cancel"));
         stepButton.setStyleName("danger");
         stepButton.setEnabled(true);
         stepButton.addStepButtonClickListener(TourActionType.CANCEL::execute);
 
         step.addButton(stepButton);
 
-        stepButton = new StepButton(messages.getMessage(getClass(), "tour.next"));
+        stepButton = new StepButton(messageBundle.getMessage("tour.next"));
         stepButton.setStyleName("friendly");
         stepButton.setEnabled(true);
         stepButton.addStepButtonClickListener(TourActionType.NEXT::execute);
@@ -65,22 +68,22 @@ public class ProductEdit extends StandardEditor<Product> {
     protected Step createStepTwo() {
         Step step = new Step("editStepTwo");
 
-        step.setText(messages.getMessage(getClass(),"tour.formText"));
-        step.setTitle(messages.getMessage(getClass(),"tour.formTitle"));
+        step.setText(messageBundle.getMessage("tour.formText"));
+        step.setTitle(messageBundle.getMessage("tour.formTitle"));
         step.setWidth("400");
         step.setTextContentMode(ContentMode.HTML);
         step.setTitleContentMode(ContentMode.HTML);
-        step.setAttachedTo(Objects.requireNonNull(ComponentsHelper.findComponent(getWindow().getFrame(), "form")));
+        step.setAttachedTo(form);
         step.setAnchor(StepAnchor.RIGHT);
 
-        StepButton stepButton = new StepButton(messages.getMessage(getClass(),"tour.back"));
+        StepButton stepButton = new StepButton(messageBundle.getMessage("tour.back"));
         stepButton.setStyleName("primary");
         stepButton.setEnabled(true);
         stepButton.addStepButtonClickListener(TourActionType.BACK::execute);
 
         step.addButton(stepButton);
 
-        stepButton = new StepButton(messages.getMessage(getClass(),"tour.next"));
+        stepButton = new StepButton(messageBundle.getMessage("tour.next"));
         stepButton.setStyleName("friendly");
         stepButton.setEnabled(true);
         stepButton.addStepButtonClickListener(TourActionType.NEXT::execute);
@@ -93,22 +96,22 @@ public class ProductEdit extends StandardEditor<Product> {
     protected Step createStepThree() {
         Step step = new Step("editStepThree");
 
-        step.setText(messages.getMessage(getClass(),"tour.windowActionsText"));
-        step.setTitle(messages.getMessage(getClass(),"tour.windowActionsTitle"));
+        step.setText(messageBundle.getMessage("tour.windowActionsText"));
+        step.setTitle(messageBundle.getMessage("tour.windowActionsTitle"));
         step.setWidth("400");
         step.setTextContentMode(ContentMode.HTML);
         step.setTitleContentMode(ContentMode.HTML);
-        step.setAttachedTo(Objects.requireNonNull(ComponentsHelper.findComponent(getWindow().getFrame(), "windowClose")));
+        step.setAttachedTo(windowClose);
         step.setAnchor(StepAnchor.RIGHT);
 
-        StepButton stepButton = new StepButton(messages.getMessage(getClass(),"tour.back"));
+        StepButton stepButton = new StepButton(messageBundle.getMessage("tour.back"));
         stepButton.setStyleName("primary");
         stepButton.setEnabled(true);
         stepButton.addStepButtonClickListener(TourActionType.BACK::execute);
 
         step.addButton(stepButton);
 
-        stepButton = new StepButton(messages.getMessage(getClass(),"tour.finish"));
+        stepButton = new StepButton(messageBundle.getMessage("tour.finish"));
         stepButton.setStyleName("friendly");
         stepButton.setEnabled(true);
         stepButton.addStepButtonClickListener(TourActionType.NEXT::execute);

@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "DEMO_PRODUCT")
 @Entity(name = "demo_Product")
 public class Product extends StandardEntity {
+
     @Column(name = "NAME")
     protected String name;
 
